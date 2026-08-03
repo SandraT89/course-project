@@ -97,4 +97,4 @@ http://sotd.us/sandrathames/SThames_Module2assignment.html
 
 ## GitHub Pages
 
-(Add your GitHub Pages URL here after publishing your site.)
+https://sandrat89.github.io/course-project/
