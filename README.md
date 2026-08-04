@@ -91,7 +91,7 @@ http://sotd.us/sandrathames/SThames_Module2assignment.html
 
 ## GitHub Repository
 
-(Add your GitHub repository URL here after creating it.)
+https://github.com/SandraT89/course-project
 
 ---
 
