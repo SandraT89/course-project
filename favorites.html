@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>Favorite Movie Form</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- jQuery Mobile CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- ThemeRoller Project Theme -->
+<link rel="stylesheet" href="courseproject/themes/Project.css">
+<link rel="stylesheet" href="courseproject/themes/jquery.mobile.icons.css">
+
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- FAVORITE MOVIE FORM PAGE -->
+
+<div data-role="page"
+     id="favorites"
+     data-theme="a"
+     data-add-back-btn="true">
+
+
+<div data-role="header" data-theme="b">
+
+<a href="#"
+   data-rel="back"
+   data-role="button"
+   data-icon="back">
+Back
+</a>
+
+<h1>Favorite Movie Form</h1>
+
+</div>
+
+
+<!-- PANEL -->
+
+<div data-role="panel"
+     id="moviePanel"
+     data-display="overlay"
+     data-theme="c">
+
+<h3>Movie Menu</h3>
+
+<p>
+Navigate to other sections of the website.
+</p>
+
+<ul data-role="listview">
+
+<li>
+<a href="SThames_Module2assignment.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="actionmovie.html">
+Action Movies
+</a>
+</li>
+
+<li>
+<a href="comedy.html">
+Comedy Movies
+</a>
+</li>
+
+<li>
+<a href="about.html">
+About
+</a>
+</li>
+
+</ul>
+
+</div>
+
+
+<div data-role="content" data-theme="a">
+
+<a href="#moviePanel"
+   data-role="button"
+   data-icon="bars"
+   data-theme="b">
+Open Movie Menu
+</a>
+
+<h3>Share Your Favorite Movie</h3>
+
+<p>
+Complete the form below to tell me about one of your favorite movies.
+Your information will be saved using Web Storage.
+</p>
+
+<form id="movieForm">
+
+<label for="name">
+Name:
+</label>
+
+<input type="text"
+       id="name"
+       name="name">
+
+<label for="email">
+Email:
+</label>
+
+<input type="email"
+       id="email"
+       name="email">
+
+<label for="genre">
+Favorite Movie Genre:
+</label>
+
+<select id="genre"
+        name="genre">
+
+<option value="Action">Action</option>
+<option value="Comedy">Comedy</option>
+<option value="Drama">Drama</option>
+<option value="Horror">Horror</option>
+<option value="Animation">Animation</option>
+
+</select>
+
+<fieldset data-role="controlgroup">
+
+<legend>
+How often do you watch movies?
+</legend>
+
+<label>
+<input type="radio"
+       name="frequency"
+       value="Weekly">
+Weekly
+</label>
+
+<label>
+<input type="radio"
+       name="frequency"
+       value="Monthly">
+Monthly
+</label>
+
+<label>
+<input type="radio"
+       name="frequency"
+       value="Occasionally">
+Occasionally
+</label>
+
+</fieldset>
+
+<label for="movie">
+Favorite Movie Title:
+</label>
+
+<input type="text"
+       id="movie"
+       name="movie">
+
+<label for="comments">
+Why do you like this movie?
+</label>
+
+<textarea id="comments"
+          name="comments"></textarea>
+
+<input type="submit"
+       value="Save Favorite Movie">
+
+</form>
+
+<br>
+
+<h3>Favorite Movie List</h3>
+
+<!-- 4-COLUMN GRID -->
+
+<div class="ui-grid-c">
+
+<div class="ui-block-a">
+<strong>Name</strong>
+</div>
+
+<div class="ui-block-b">
+<strong>Genre</strong>
+</div>
+
+<div class="ui-block-c">
+<strong>Movie</strong>
+</div>
+
+<div class="ui-block-d">
+<strong>Frequency</strong>
+</div>
+
+</div>
+
+<div id="favoriteList">
+
+</div>
+
+<br>
+
+<button id="clearData">
+Clear All Favorites
+</button>
+
+<div id="message">
+
+</div>
+
+</div>
+
+<div data-role="footer">
+
+<h4>
+Sandy's Favorite Movies &copy; 2026
+</h4>
+
+</div>
+
+</div>
+
+<script>
+
+displayFavorites();
+
+$("#movieForm").submit(function(event){
+
+event.preventDefault();
+
+var movieInfo = {
+
+name: $("#name").val(),
+
+email: $("#email").val(),
+
+genre: $("#genre").val(),
+
+frequency: $("input[name='frequency']:checked").val(),
+
+movie: $("#movie").val(),
+
+comments: $("#comments").val()
+
+};
+
+var favorites =
+JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+
+favorites.push(movieInfo);
+
+localStorage.setItem(
+"favoriteMovies",
+JSON.stringify(favorites)
+);
+
+$("#message").html(
+"<p><strong>Your favorite movie has been saved!</strong></p>"
+);
+
+$("#movieForm")[0].reset();
+
+displayFavorites();
+
+});
+function displayFavorites(){
+
+    var favorites =
+    JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+
+    var output = "";
+
+    for(var i = 0; i < favorites.length; i++){
+
+        output +=
+
+        '<div class="ui-grid-c">' +
+
+            '<div class="ui-block-a">' +
+            favorites[i].name +
+            '</div>' +
+
+            '<div class="ui-block-b">' +
+            favorites[i].genre +
+            '</div>' +
+
+            '<div class="ui-block-c">' +
+            favorites[i].movie +
+            '</div>' +
+
+            '<div class="ui-block-d">' +
+            favorites[i].frequency +
+            '</div>' +
+
+        '</div>';
+
+    }
+
+    if(favorites.length == 0){
+
+        output = "<p>No favorite movies have been saved yet.</p>";
+
+    }
+
+    $("#favoriteList").html(output);
+
+}
+
+$("#clearData").click(function(){
+
+    localStorage.removeItem("favoriteMovies");
+
+    $("#favoriteList").html(
+        "<p>No favorite movies have been saved yet.</p>"
+    );
+
+    $("#message").html(
+        "<p>All saved favorites have been cleared.</p>"
+    );
+
+});
+
+</script>
+
+</body>
+
+</html>
